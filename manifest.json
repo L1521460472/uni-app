@@ -1,5 +1,5 @@
 {
-    "name" : "管理专用标识",
+    "name" : "中国野生动物管理专用标识",
     "appid" : "__UNI__9D10F48",
     "description" : "",
     "versionName" : "1.1.0",
@@ -60,10 +60,15 @@
             "port" : 9090,
             "https" : false
         },
-        "title" : "码上智能",
+        "title" : "中国野生动物管理专用标识",
         "router" : {
             "mode" : "history",
             "base" : "./"
+        },
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
         }
     }
 }

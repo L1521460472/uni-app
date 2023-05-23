@@ -28,7 +28,7 @@
 		<view class="footer">
 			<uni-table ref="table" border>
 				<uni-tr v-for="(item, index) in tableData" :key="index">
-					<uni-td width="80">
+					<uni-td width="80" align="center">
 						<view class="name">{{ item.name }}</view>
 					</uni-td>
 					<uni-td align="left">
@@ -70,7 +70,13 @@
 	  		methods: {
 	  			search(res) {
 					getTrace(res.value).then(resp => {
-					  this.items = resp.data.product.attrs
+					  this.items = [{k:'制品名称',v:resp.data.product.name},...resp.data.product.attrs].map((item)=>{
+						  if(item.k=='企业编码'){
+							  item.k = '标识代码'
+							  item.v = this.searchValue
+						  }
+						  return item
+					  })
 					})
 	  			},
 				switchBtn() {
@@ -91,9 +97,6 @@
 		}
 		
     },
-	onShow:function(option){
-		console.log(getCurrentPages())
-	}
   }
 </script>
 
@@ -113,6 +116,10 @@
 		height: 32px;
 		border-radius: 0 !important; 
 		border: 1px solid #e5e5e5;
+		padding-left: 5px;
+		.uni-searchbar__box-icon-search{
+			display: none;
+		}
 	} 
   }
   
@@ -122,7 +129,7 @@
 	}
 	.banner{
 		width: 100%;
-		padding: 10px;
+		padding: 10px 4px;
 		font-size: 14px;
 		color: #333;
 		background: url(../static/images/checkbg.png) no-repeat;
@@ -130,23 +137,25 @@
 	}
 		
 	.bannerTitle{
-		font-size: 15px;
+		font-size: 18px;
 		color: #34a471;
 		font-weight: bold;
 		margin-bottom: 6px;
-		margin-left: 6px;
+		margin-left: 15px;
+		margin-top: 3px;
 	}
 	.lists{
 		display: flex;
 		align-items: center;
 		padding: 3px;
-		margin-left: 6px;
+		margin-left: 15px;
+		padding-right: 14px;
 	}
 	.listsLeft{
-		width: 28%;
+		width: 26%;
 	}
 	.listsRight{
-		width: 72%;
+		width: 74%;
 	}
 	.footer{
 		margin-top: 10px;
@@ -158,16 +167,16 @@
 		border-color: #999 !important;
 	}
 	.uni-table-td{
-		padding: 4px 10px;
+		padding: 4px 8px;
 	}
 	.name{
-		font-size: 14px;
+		font-size: 15px;
 		color: #333;
 	}
 	.tableText{
 		white-space: pre-wrap;
 		word-break: break-word;
-		font-size: 14px;
+		font-size: 15px;
 		color: #333;
 		line-height: 18px;
 	}
@@ -176,6 +185,7 @@
   		font-size: 14px;
   		color:#666;
   	}
+	
   
   	.example-body {
   		/* #ifndef APP-NVUE */
